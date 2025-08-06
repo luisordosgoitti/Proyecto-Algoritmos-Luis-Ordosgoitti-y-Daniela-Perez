@@ -15,7 +15,7 @@ class Galeria:
         for dep in self.departamentos:
             dep.show()
 
-"""Este Método extrae desde el endpoint de Departamentos cada uno de ellos y los guarda en una lista de objetos de tipo Departamento"""
+    """Este Método extrae desde el endpoint de Departamentos cada uno de ellos y los guarda en una lista de objetos de tipo Departamento"""
     def cargar_departamentos(self):
         self.departamentos=[]
         departamentos_from_db=departamentos_db()
