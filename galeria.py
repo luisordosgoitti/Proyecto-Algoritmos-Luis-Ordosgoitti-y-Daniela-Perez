@@ -4,7 +4,11 @@ from Departamentos import Departamentos
 from db import *
 
 class Galeria:
-  pass
-  def cargar_departamentos(self):
-    self.departamentos=[]
-    get_departamentos()
+  None
+  
+def cargar_departamentos():
+    departamentos=[]
+    departamentos_from_db=departamentos_db()
+    for departamento in departamentos_from_db["departments"]:
+        departamentos.append(Departamento(departamento["departmentId"], departamento["displayName"]))
+
