@@ -1,7 +1,7 @@
-from db import db
+from db import *
 from galeria import Galeria
 
 def main():
-  galeria = Galeria(db)
+  MetroArt = Galeria(db)
   galeria.start()
 main()
