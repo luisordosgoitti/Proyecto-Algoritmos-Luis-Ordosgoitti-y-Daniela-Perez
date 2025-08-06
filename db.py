@@ -1,8 +1,9 @@
 import requests
 
 def get_departamentos():
-    departamentos_id=requests.get("https://collectionapi.metmuseum.org/public/collection/v1/departments")
-    return departamentos.json()
+    departamentos_from_api=requests.get("https://collectionapi.metmuseum.org/public/collection/v1/departments")
+    departamentos_id= departamentos_from_api.json()
+    return departamentos_id
 
 print(get_departamentos())
 
@@ -29,3 +30,4 @@ print(get_departamentos())
     ]
 
 }
+
