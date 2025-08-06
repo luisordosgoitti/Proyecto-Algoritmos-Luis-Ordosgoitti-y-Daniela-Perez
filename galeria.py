@@ -6,4 +6,5 @@ from db import
 class Galeria:
   pass
   def cargar_departamentos(self):
-    pass
+    self.departamentos=[]
+    get_departamentos()
