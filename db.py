@@ -1,10 +1,10 @@
 import requests
 
-def get_departamentos():
+def departamentos_db():
     departamentos_from_api=requests.get("https://collectionapi.metmuseum.org/public/collection/v1/departments")
     return departamentos_from_api
 
-print(get_departamentos())
+print(departamentos_db())
 
 {'departments': [
     {'departmentId': 1, 'displayName': 'American Decorative Arts'}, 
@@ -29,5 +29,6 @@ print(get_departamentos())
     ]
 
 }
+
 
 
