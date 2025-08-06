@@ -1,7 +1,7 @@
 import requests
 
 def get_departamentos():
-    departamentos=requests.get("https://collectionapi.metmuseum.org/public/collection/v1/departments")
+    departamentos_id=requests.get("https://collectionapi.metmuseum.org/public/collection/v1/departments")
     return departamentos.json()
 
 print(get_departamentos())
@@ -27,4 +27,5 @@ print(get_departamentos())
     {'departmentId': 19, 'displayName': 'Photographs'}, 
     {'departmentId': 21, 'displayName': 'Modern Art'}
     ]
+
 }
