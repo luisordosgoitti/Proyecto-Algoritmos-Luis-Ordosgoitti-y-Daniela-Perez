@@ -5,6 +5,7 @@ from db import *
 import os
 
 class Galeria:
+    """Este metodo es el principal del sistema"""
     def start(self):
         self.cargar_departamentos()
         while True:
@@ -33,7 +34,8 @@ class Galeria:
                 break
             else:
                  print("Opción inválida.")
-        
+
+    """Este metodo aplica el metodo show a cada uno de los objetos departamento en la lista creada en cargar departamentos"""
     def mostrar_departamentos(self):
         for dep in self.departamentos:
             dep.show()
