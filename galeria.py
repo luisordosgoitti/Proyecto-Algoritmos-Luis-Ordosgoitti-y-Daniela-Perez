@@ -21,11 +21,14 @@ class Galeria:
                 try:
                     id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
                 except:
-                    print("Por favor, ingrese un número.")
+                    print("Por favor, ingrese un número de la lista.")
             elif menu == "2":
                 os.system('cls')
                 self.mostrar_nacionalidades()
-                nacionalidad = input("Por favor, ingresa una nacionalidad: ")  
+                try:
+                    nacionalidad = int(input("Por favor, ingresa el número de la nacionalidad: "))
+                except:
+                    print("Por favor, ingrese un número de la lista.")  
             elif menu == "3":
                 os.system('cls')
                 nombre_artista = input("Por favor, ingresa el nombre de un artista: ")
