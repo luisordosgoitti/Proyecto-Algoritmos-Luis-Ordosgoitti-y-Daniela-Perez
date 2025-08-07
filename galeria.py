@@ -7,7 +7,23 @@ import os
 class Galeria:
     def start(self):
         self.cargar_departamentos()
-        """Aca va el menu"""
+        while True:
+            menu=input("""Cátalogo de Obras de MetroArt. Elija una opción:
+1 - Ver Obras por Departamento.
+2 - Ver Obras por Nacionalidad.
+3 - Ver Obras por Nombre de Artista.
+4 - Salir
+--->""")
+            if menu == "1":
+                id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
+            elif menu == "2":
+                nacionalidad = input("Por favor, ingresa una nacionalidad: ")  
+            elif menu == "3":
+                nombre_artista = input("Por favor, ingresa el nombre de un artista: ")
+            elif menu == "4":
+                print("¡Gracias por usar nuestro catálogo!")
+            else:
+                 print("Opción inválida.")
         
         self.mostrar_departamentos()
         
