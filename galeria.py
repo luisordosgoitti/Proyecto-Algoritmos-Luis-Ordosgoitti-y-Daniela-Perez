@@ -15,6 +15,7 @@ class Galeria:
 4 - Salir
 --->""")
             if menu == "1":
+                self.mostrar_departamentos()
                 id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
             elif menu == "2":
                 self.mostrar_nacionalidades()
@@ -25,8 +26,6 @@ class Galeria:
                 print("¡Gracias por usar nuestro catálogo!")
             else:
                  print("Opción inválida.")
-        
-        self.mostrar_departamentos()
         
     def mostrar_departamentos(self):
         for dep in self.departamentos:
