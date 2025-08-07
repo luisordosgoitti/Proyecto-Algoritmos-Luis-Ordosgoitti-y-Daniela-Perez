@@ -8,7 +8,7 @@ class Galeria:
     """Este metodo es el principal del sistema"""
     def start(self):
         self.cargar_departamentos()
-        while True:
+       while True:
             menu=input("""Cátalogo de Obras de MetroArt. Elija una opción:
 1 - Ver Obras por Departamento.
 2 - Ver Obras por Nacionalidad.
@@ -18,17 +18,23 @@ class Galeria:
             if menu == "1":
                 os.system('cls')
                 self.mostrar_departamentos()
-                try
-                id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
-                except Error
-                print("Por favor, ingrese un número.")
+                try:
+                    id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
+                except:
+                    print("Ha ocurrido un error. Vuelva a intentarlo otra vez.")
             elif menu == "2":
                 os.system('cls')
                 self.mostrar_nacionalidades()
-                nacionalidad = input("Por favor, ingresa una nacionalidad: ")  
+                try:
+                    nacionalidad = input("Por favor, ingresa una nacionalidad: ")
+                except:
+                    print("Ha ocurrido un error. Vuelva a intentarlo otra vez.")
             elif menu == "3":
                 os.system('cls')
+                try:
                 nombre_artista = input("Por favor, ingresa el nombre de un artista: ")
+                except:
+                    print("Ha ocurrido un error. Vuelva a intentarlo otra vez.")
             elif menu == "4":
                 print("¡Gracias por usar nuestro catálogo!")
                 break
