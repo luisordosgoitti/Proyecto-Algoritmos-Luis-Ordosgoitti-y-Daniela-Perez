@@ -15,18 +15,18 @@ class Galeria:
 4 - Salir
 --->""")
             if menu == "1":
-                os.system = ("clear")
+                os.system = ('cls')
                 self.mostrar_departamentos()
                 try
                 id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
                 except Error
                 print("Por favor, ingrese un número.")
             elif menu == "2":
-                os.system = ("clear")
+                os.system = ('cls')
                 self.mostrar_nacionalidades()
                 nacionalidad = input("Por favor, ingresa una nacionalidad: ")  
             elif menu == "3":
-                os.system = ("clear")
+                os.system = ('cls')
                 nombre_artista = input("Por favor, ingresa el nombre de un artista: ")
             elif menu == "4":
                 print("¡Gracias por usar nuestro catálogo!")
