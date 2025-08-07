@@ -17,6 +17,7 @@ class Galeria:
             if menu == "1":
                 id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
             elif menu == "2":
+                self.mostrar_nacionalidades()
                 nacionalidad = input("Por favor, ingresa una nacionalidad: ")  
             elif menu == "3":
                 nombre_artista = input("Por favor, ingresa el nombre de un artista: ")
@@ -30,6 +31,14 @@ class Galeria:
     def mostrar_departamentos(self):
         for dep in self.departamentos:
             dep.show()
+
+    """Esta funcion crea una lista de nacionalidades y le añade un indice, con el fin de mostrarle al usuario una lista comoda de las nacionalidades"""
+    def mostrar_nacionalidades(self):
+        nacionalidades=nacionalidades_db()
+        index=1
+        for nacionalidad in nacionalidades:
+            print(f"{index} - {nacionalidad}")
+            index += 1
 
     """Este Método extrae desde el endpoint de Departamentos cada uno de ellos y los guarda en una lista de objetos de tipo Departamento"""
     def cargar_departamentos(self):
