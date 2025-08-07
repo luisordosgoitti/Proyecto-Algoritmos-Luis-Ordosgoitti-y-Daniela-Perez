@@ -1,5 +1,5 @@
-from artista import Artista
-from obra import Obra
+#from artista import Artista
+#from obra import Obra
 from Departamentos import Departamento
 from db import *
 import os
@@ -8,7 +8,7 @@ class Galeria:
     """Este metodo es el principal del sistema"""
     def start(self):
         self.cargar_departamentos()
-       while True:
+        while True:
             menu=input("""Cátalogo de Obras de MetroArt. Elija una opción:
 1 - Ver Obras por Departamento.
 2 - Ver Obras por Nacionalidad.
@@ -21,25 +21,25 @@ class Galeria:
                 try:
                     id_departamento = int(input("Por favor, ingresa un número válido de ID para Departamento: "))
                 except:
-                    print("Ha ocurrido un error. Vuelva a intentarlo otra vez.")
+                    print("Por favor, ingrese un número.")
             elif menu == "2":
                 os.system('cls')
                 self.mostrar_nacionalidades()
-                try:
-                    nacionalidad = input("Por favor, ingresa una nacionalidad: ")
-                except:
-                    print("Ha ocurrido un error. Vuelva a intentarlo otra vez.")
+                nacionalidad = input("Por favor, ingresa una nacionalidad: ")  
             elif menu == "3":
                 os.system('cls')
-                try:
                 nombre_artista = input("Por favor, ingresa el nombre de un artista: ")
-                except:
-                    print("Ha ocurrido un error. Vuelva a intentarlo otra vez.")
+                self.buscar_artista(nombre_artista)
+                
             elif menu == "4":
                 print("¡Gracias por usar nuestro catálogo!")
                 break
             else:
                  print("Opción inválida.")
+
+    def buscar_artista (self,nombre):
+        obras_artista=requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nombre}")
+        return obras_artista.json()
 
     """Este metodo aplica el metodo show a cada uno de los objetos departamento en la lista creada en cargar departamentos"""
     def mostrar_departamentos(self):
