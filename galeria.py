@@ -32,11 +32,11 @@ class Galeria:
                     try:
                         nacionalidad = input("Por favor, ingrese una nacionalidad (ej. American): ")
                                 self.buscar_obras_por_nacionalidad(nacionalidad)
-                        else:
-                            print("Opción inválida. Vuelva a ingresar otro número.")
+                else:
+                print(f"No se encontraron obras de la nacionalidad: {nacionalidad_seleccionada}. Vuelva a intentarlo otra vez.")
                     except:
                         print("Por favor, ingrese un número de la lista.")
-                
+      
             elif menu == "3":
                 os.system('cls')
                 nombre_artista = input("Por favor, ingrese el nombre de un artista: ")
