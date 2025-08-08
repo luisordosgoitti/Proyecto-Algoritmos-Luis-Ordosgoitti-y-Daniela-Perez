@@ -5,10 +5,7 @@ from db import *
 import os
 
 class Galeria:
-    def __init__(self):
-        self.departamentos = []
-
-    """Este metodo es el principal del sistema"""
+ """Este metodo es el principal del sistema"""
     def start(self):
         self.cargar_departamentos()
         while True:
