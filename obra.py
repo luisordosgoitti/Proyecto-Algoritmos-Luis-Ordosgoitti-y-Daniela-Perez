@@ -22,6 +22,8 @@ class Obra:
             print("No disponible.")
 
     def resumen_por_obra(self):
+        print()
         print(f"Título de la Obra: {self.titulo_obra}")
         print(f"ID: {self.id_obra}")
         print(f"Nombre del Autor: {self.artista.nombre_artista}")
+        print("-"*80)
