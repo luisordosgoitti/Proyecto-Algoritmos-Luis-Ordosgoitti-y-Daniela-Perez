@@ -17,7 +17,7 @@ class Obra:
 
         if self.artista:
             print("Detalles Personales del Artista:")
-            print(self.artista.get_info())
+            print(self.artista.mostrar_info())
         else:
             print("No disponible.")
 
