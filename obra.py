@@ -1,5 +1,3 @@
-from artista import Artista
-
 class Obra:
     def __init__(self, titulo_obra, id_obra, tipo, año_creacion, url_imagen_obra, artista):
         self.titulo_obra = titulo_obra
