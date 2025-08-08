@@ -3,7 +3,6 @@ from obra import Obra
 from Departamentos import Departamento
 from db import *
 import os
-import requests
 
 class Galeria:
     def __init__(self):
