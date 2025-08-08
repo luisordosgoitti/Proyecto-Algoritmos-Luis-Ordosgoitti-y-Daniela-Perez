@@ -22,7 +22,7 @@ class Galeria:
                     print("\n"+"="*80)
                     id_departamento = int(input("Por favor, ingrese un número válido de ID para Departamento: "))
                     os.system('cls')
-                    print (f"Usted ha seleccionado el Id: {id_departamento}")
+                    print (f"Usted ha seleccionado el ID: {id_departamento}")
                     json=self.buscar_obras_por_departamento(id_departamento)
                     self.mostrar_obras_resumen(json)
                 except:
@@ -92,7 +92,7 @@ class Galeria:
                 eleccion_2=input("Desea ver Alguna Obra en especifico? Si/No: ")
                 if eleccion_2 == "Si":
                         os.system('cls')
-                        ID_Seleccionado=input("Ingrese el Id deseado: ")
+                        ID_Seleccionado=input("Ingrese el ID de la Obra que desea buscar: ")
                         #Aca iria la funcion
                 elif eleccion == "No":
                     print ("\n"+"Volviendo al Menu..."+"\n")
