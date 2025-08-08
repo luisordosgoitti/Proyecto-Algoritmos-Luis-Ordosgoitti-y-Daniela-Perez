@@ -1,5 +1,5 @@
-#from artista import Artista
-#from obra import Obra
+from artista import Artista
+from obra import Obra
 from Departamentos import Departamento
 from db import *
 import os
