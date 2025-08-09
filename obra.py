@@ -1,4 +1,3 @@
-import requests
 from PIL import Image
 
 class Obra:
