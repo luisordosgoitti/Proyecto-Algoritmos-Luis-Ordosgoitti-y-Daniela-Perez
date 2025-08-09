@@ -18,6 +18,8 @@ class Galeria:
 4 - Salir
 --->""")
             if menu == "1":
+"""Este método de os.system('cls') se aprendió en el video de Aulas Virtuales del prof. Guillén de RESTful APIs. En este caso, se adaptó el método de os.system('clear') de
+Linux a la alternativa de Windows""""
                 os.system('cls')
                 self.mostrar_departamentos()
                 try:
@@ -84,10 +86,10 @@ class Galeria:
             indice += 15
 
             if indice >= len(lista_de_obras):
-                print("\nYa se han mostrado todas las obras encontradas.")
+                print("Ya se han mostrado todas las obras encontradas.")
                 break
 
-            eleccion = input("\ndesea seguir? Si/No: ").lower()
+            eleccion = input("¿Desea seguir? Si/No: ").lower()
             if eleccion == "si":
                 os.system('cls')
                 continue
@@ -98,12 +100,12 @@ class Galeria:
                 break
 
         while True:
-            eleccion_2 = input("\nDesea ver Alguna Obra en especifico? Si/No: ").lower()
+            eleccion_2 = input("¿Desea ver Alguna Obra en especifico? Si/No: ").lower()
             if eleccion_2 == "si":
                 self.mostrar_detalles_obra()
 
             elif eleccion_2 == "no":
-                print ("\n"+"Volviendo al Menu..."+"\n")
+                print ("Volviendo al Menú...")
                 return
             else:
                 print("Opción no válida, por favor responda 'Si' o 'No'.")
@@ -166,12 +168,12 @@ class Galeria:
                 obra.detalles_obra()
 
                 if obra.url_imagen_obra:
-                    ver_imagen = input("\n¿Desea ver la imagen de esta obra? (Si/No): ").lower()
+                    ver_imagen = input("¿Desea ver la imagen de esta obra? (Si/No): ").lower()
                     if ver_imagen == "si":
-                        print("Cargando imagen...")
+                        print("Cargando imagen de obra...")
                         self.mostrar_imagen_desde_url(obra.url_imagen_obra)
                 else:
-                    print("\nEsta obra no tiene una imagen disponible.")
+                    print("Esta obra no tiene una imagen disponible en nuestra base de datos.")
             else:
                 print(f"No se encontró ninguna obra con el ID {id_obra}.")
 
@@ -209,4 +211,4 @@ class Galeria:
             index=1
             for nacionalidad in nacionalidades:
                 print(f"{index} - {nacionalidad}")
-                index += 1
+                index += 1
