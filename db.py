@@ -12,3 +12,5 @@ def nacionalidades_db():
         nacionalidad=pais.strip()
         nacionalidades.append(nacionalidad)
     return nacionalidades
+
+"""Aca se importa el json de los departamentos y se extrae la lista de nacionalidades"""
