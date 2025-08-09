@@ -1,3 +1,6 @@
+import requests
+from PIL import Image
+
 class Obra:
     def __init__(self, titulo_obra, id_obra, tipo, año_creacion, url_imagen_obra, artista):
         self.titulo_obra = titulo_obra
@@ -15,9 +18,12 @@ class Obra:
         print(f"Año de Elaboración de la Obra: {self.año_creacion}")
         print(f"Imagen: {self.url_imagen_obra}")
 
-        if self.artista:
+        if self.url_imagen_obra:
+            print(f"URL de la Imagen: {self.url_imagen_obra}")
+
             print("Detalles Personales del Artista:")
-            print(self.artista.mostrar_info())
+        if self.artista:
+            self.artista.mostrar_info()
         else:
             print("No disponible.")
 
