@@ -3,9 +3,11 @@ from obra import Obra
 from Departamentos import Departamento
 from db import *
 import os
+import requests
+from PIL import Image
 
 class Galeria:
- """Este metodo es el principal del sistema"""
+    """Este metodo es el principal del sistema"""
     def start(self):
         self.cargar_departamentos()
         while True:
@@ -23,26 +25,22 @@ class Galeria:
                     id_departamento = int(input("Por favor, ingrese un número válido de ID para Departamento: "))
                     os.system('cls')
                     print (f"Usted ha seleccionado el ID: {id_departamento}")
-                    json=self.buscar_obras_por_departamento(id_departamento)
+                    json = self.buscar_obras_por_departamento(id_departamento)
                     self.mostrar_obras_resumen(json)
                 except:
                     print("Por favor, ingrese un número de la lista.")
                     
             elif menu == "2":
                 os.system('cls')
-                nacionalidades = nacionalidades_db()
-                if nacionalidades:
-                    self.mostrar_nacionalidades()
-                    try:
-                        nacionalidad = input("Por favor, ingrese una nacionalidad (ej. American): ")
-                        if nacionalidad:
-                            json=self.buscar_obras_por_nacionalidad(nacionalidad)
-                            self.mostrar_obras_resumen(json)
-                    except:
-                        print("Por favor, ingrese una nacionalidad de la lista.")
-                else:
-                    print(f"No se encontraron obras de la nacionalidad: {nacionalidad_seleccionada}. Vuelva a intentarlo otra vez.")
-      
+                self.mostrar_nacionalidades()
+                try:
+                    nacionalidad = input("Por favor, ingrese una nacionalidad (ej. American): ")
+                    if nacionalidad:
+                        json=self.buscar_obras_por_nacionalidad(nacionalidad)
+                        self.mostrar_obras_resumen(json)
+                except:
+                    print("Por favor, ingrese una nacionalidad de la lista.")
+
             elif menu == "3":
                 os.system('cls')
                 nombre_artista = input("Por favor, ingrese el nombre de un artista: ")
@@ -58,46 +56,60 @@ class Galeria:
                 print()
 
     """Métodos de Búsqueda"""
-    def buscar_artista (self,nombre):
-        obras_artista=requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nombre}")
+    def buscar_artista(self, nombre):
+        """
+        Busca obras en la API por el nombre del artista.
+        """
+        obras_artista = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nombre}")
         return obras_artista.json()
 
-    def buscar_obras_por_departamento (self,id_departamento):
-        obras_departamento=requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId={id_departamento}&q=*")
+    def buscar_obras_por_departamento(self, id_departamento):
+        obras_departamento = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId={id_departamento}&q=*")
         return obras_departamento.json()
 
-    def buscar_obras_por_nacionalidad (self,nacionalidad_seleccionada):
-        obras_nacionalidad=requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nacionalidad_seleccionada}")
+    def buscar_obras_por_nacionalidad(self, nacionalidad_seleccionada):
+        obras_nacionalidad = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nacionalidad_seleccionada}")
         return obras_nacionalidad.json()
 
+    """Metodo para transformar las obras a objetos"""
+    def mostrar_obras_resumen(self, json_data):
+        if not json_data or json_data.get("total", 0) == 0:
+            print("No se encontraron obras para su criterio de búsqueda. Volviendo al menú...")
+            return
 
-"""Metodo para transformar las obras a objetos"""
-    def mostrar_obras_resumen(self, json):
-        indice=0
-        N_obras=json["total"]
-        if N_obras==0:
-            return print("No se encontraron obras")
-        print(f"Se encontraron: {N_obras} obras")
-        lista_de_obras=json["objectIDs"]
+        n_obras = json_data["total"]
+        print(f"Se encontraron: {n_obras} obras.")
+        lista_de_obras = json_data["objectIDs"]
+        indice = 0
+        
         while True:
-            mostrados, indice = self.mostrar_15(lista_de_obras, indice)
-            if mostrados is None:
-                return None
-            eleccion=input("desea seguir? Si/No: ")
-            if eleccion == "Si":
-                os.system('cls')
-                obras=[]
-            elif eleccion == "No":
-                print()
-                eleccion_2=input("Desea ver Alguna Obra en especifico? Si/No: ")
-                if eleccion_2 == "Si":
-                        os.system('cls')
-                        ID_Seleccionado=input("Ingrese el ID de la Obra que desea buscar: ")
-                        #Aca iria la funcion
-                elif eleccion == "No":
-                    print ("\n"+"Volviendo al Menu..."+"\n")
-                    return None
+            self.mostrar_15(lista_de_obras, indice)
+            indice += 15
 
+            if indice >= len(lista_de_obras):
+                print("\nYa se han mostrado todas las obras encontradas.")
+                break
+
+            eleccion = input("\ndesea seguir? Si/No: ").lower()
+            if eleccion == "si":
+                os.system('cls')
+                continue
+            elif eleccion == "no":
+                break
+            else:
+                print("Opción no válida.")
+                break
+
+        while True:
+            eleccion_2 = input("\nDesea ver Alguna Obra en especifico? Si/No: ").lower()
+            if eleccion_2 == "si":
+                self.mostrar_detalles_obra()
+
+            elif eleccion_2 == "no":
+                print ("\n"+"Volviendo al Menu..."+"\n")
+                return
+            else:
+                print("Opción no válida, por favor responda 'Si' o 'No'.")
 
     def mostrar_15 (self, lista_de_IDs, indice):
         indice_f=indice+15
@@ -107,36 +119,97 @@ class Galeria:
         IDs_de_obras_mostradas=lista_de_IDs[indice:indice_f]
         print(f"mostrando elementos del {indice+1} al {indice_f}:")
         obras=[]
+
         for ID in IDs_de_obras_mostradas:
-            obra_api=requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{ID}")
+            try:
+                obra_api = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{ID}")
+                if obra_api.status_code == 200:
+                    obra_dic = obra_api.json()
+                    artista = Artista(
+                        obra_dic.get("artistDisplayName", "Unknown"), 
+                        obra_dic.get("artistNationality", "Unknown"),
+                        obra_dic.get("artistBeginDate", "No se tiene la fecha."),
+                        obra_dic.get("artistEndDate", "No se tiene la fecha.")
+                    )
+                    obra = Obra(
+                        obra_dic.get("title", "Sin Título"),
+                        obra_dic.get("objectID", "N/A"),
+                        obra_dic.get("classification", "No clasificado"),
+                        obra_dic.get("objectDate", "Sin fecha"),
+                        obra_dic.get("primaryImage", ""),
+                        artista
+                    )
+                    obra.resumen_por_obra()
+            except:
+                print(f"No se pudo obtener la información para la obra con ID: {ID}")
+
+    def mostrar_detalles_obra(self):
+        try:
+            id_obra = int(input("Por favor, ingrese el ID de la obra que desea ver en detalle: "))
+            
+            obra_api = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id_obra}")
+            
             if obra_api.status_code == 200:
-                try:
-                    obra_dic=obra_api.json()
-                    obras.append(Obra(obra_dic["title"], obra_dic["objectID"], obra_dic["classification"], obra_dic["objectDate"], obra_dic["primaryImage"], Artista(obra_dic["artistDisplayName"], obra_dic["artistNationality"], obra_dic["artistBeginDate"], obra_dic["artistEndDate"])))
-                except requests.exceptions.JSONDecodeError:
-                    print(f"El Id no corresponde a ninguna obra")
-                    return None
-        for obra in obras:
-            obra.resumen_por_obra()
-        return obras, indice_f
+                obra_dic = obra_api.json()
+                artista = Artista(
+                    obra_dic.get("artistDisplayName", "Desconocido"),
+                    obra_dic.get("artistNationality", "Desconocida"),
+                    obra_dic.get("artistBeginDate", "N/A"),
+                    obra_dic.get("artistEndDate", "N/A")
+                )
+                obra = Obra(
+                    obra_dic.get("title", "Sin Título"),
+                    obra_dic.get("objectID", "N/A"),
+                    obra_dic.get("classification", "No clasificado"),
+                    obra_dic.get("objectDate", "Sin fecha"),
+                    obra_dic.get("primaryImageSmall", ""),
+                    artista
+                )
+                
+                obra.detalles_obra()
 
-    """Este metodo aplica el metodo show a cada uno de los objetos departamento en la lista creada en cargar departamentos"""
-    def mostrar_departamentos(self):
-        for dep in self.departamentos:
-            dep.show()
+                if obra.url_imagen_obra:
+                    ver_imagen = input("\n¿Desea ver la imagen de esta obra? (Si/No): ").lower()
+                    if ver_imagen == "si":
+                        print("Cargando imagen...")
+                        self.mostrar_imagen_desde_url(obra.url_imagen_obra)
+                else:
+                    print("\nEsta obra no tiene una imagen disponible.")
+            else:
+                print(f"Error: No se encontró ninguna obra con el ID {id_obra}.")
 
-    """Esta funcion crea una lista de nacionalidades y le añade un indice, con el fin de mostrarle al usuario una lista comoda de las nacionalidades"""
-    def mostrar_nacionalidades(self):
-        nacionalidades=nacionalidades_db()
-        index=1
-        for nacionalidad in nacionalidades:
-            print(f"{index} - {nacionalidad}")
-            index += 1
+        except:
+            print("Error: El ID debe ser un número o no se pudo buscar la obra.")
+
+    def mostrar_imagen_desde_url(self, url):
+        try:
+            response = requests.get(url, stream=True)
+            if response.status_code == 200:
+                img = Image.open(response.raw)
+                img.show()
+            else:
+                print("No se pudo descargar la imagen.")
+        except:
+            print("Ocurrió un error al mostrar la imagen.")
 
     """Este Método extrae desde el endpoint de Departamentos cada uno de ellos y los guarda en una lista de objetos de tipo Departamento"""
     def cargar_departamentos(self):
-        self.departamentos=[]
-        departamentos_from_db=departamentos_db()
-        for departamento in departamentos_from_db["departments"]:
-            self.departamentos.append(Departamento(departamento["departmentId"], departamento["displayName"]))
+            self.departamentos = []
+            departamentos_from_db = departamentos_db()
+            for departamento in departamentos_from_db["departments"]:
+                self.departamentos.append(Departamento(departamento["departmentId"], departamento["displayName"]))
 
+    """Este metodo aplica el metodo show a cada uno de los objetos departamento en la lista creada en cargar departamentos"""
+    def mostrar_departamentos(self):
+            print("Lista de Departamentos Disponibles:")
+            for dep in self.departamentos:
+                dep.show()
+            
+    """Esta funcion crea una lista de nacionalidades y le añade un indice, con el fin de mostrarle al usuario una lista comoda de las nacionalidades"""
+    def mostrar_nacionalidades(self):
+            print("Lista de Nacionalidades Disponibles:")
+            nacionalidades=nacionalidades_db()
+            index=1
+            for nacionalidad in nacionalidades:
+                print(f"{index} - {nacionalidad}")
+                index += 1
