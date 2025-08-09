@@ -10,3 +10,5 @@ class Artista:
         print(f"Nacionalidad del Artista: {self.nacionalidad_artista}.")
         print(f"Nacido: {self.fecha_nacimiento}.")
         print(f"Fallecido: {self.fecha_muerte}.")
+
+"""Aca se define la clase Artista y sus atributos"""
