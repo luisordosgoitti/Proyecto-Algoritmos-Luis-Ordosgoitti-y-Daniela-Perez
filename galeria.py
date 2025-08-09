@@ -17,7 +17,7 @@ class Galeria:
 4 - Salir
 --->""")
             if menu == "1":
-"""Este método de os.system('cls') se aprendió en el video de Aulas Virtuales del prof. Guillén de RESTful APIs. En este caso, se adaptó el método de os.system('clear') de
+"""Este método de os.system se aprendió en el video de Aulas Virtuales del prof. Guillén de RESTful APIs. En este caso, se adaptó el método de os.system de
 Linux a la alternativa de Windows"""
                 os.system('cls')
                 self.mostrar_departamentos()
@@ -56,7 +56,9 @@ Linux a la alternativa de Windows"""
                 print("Opción inválida.")
                 print()
 
-    """Métodos de Búsqueda"""
+"""En el menu se ejecutan todas las funciones necesarias, es como la columna vertebral del progrrama"""
+
+    """Métodos de Búsqueda, estos lo que hacen es extraer la lista de IDs de los endpoints para cada busqueda"""
     def buscar_artista(self, nombre):
         obras_artista = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nombre}")
         return obras_artista.json()
@@ -69,7 +71,7 @@ Linux a la alternativa de Windows"""
         obras_nacionalidad = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nacionalidad_seleccionada}")
         return obras_nacionalidad.json()
 
-    """Metodo para transformar las obras a objetos"""
+    """Metodo para transformar las obras a objetos, este metodo procesa los IDs de las Apis y los transforma en objetos de tipo Obra y Artista, para luego imprimirlos en el terminal"""
     def mostrar_obras_resumen(self, json_data):
         if not json_data or json_data.get("total", 0) == 0:
             print("No se encontraron obras para su criterio de búsqueda. Volviendo al menú...")
@@ -109,6 +111,7 @@ Linux a la alternativa de Windows"""
             else:
                 print("Opción no válida, por favor responda 'Si' o 'No'.")
 
+"""Este metodopermite mostrar el resumen de las obras de 15 en 15 elementos, para no sobrecargar el sistema"""
     def mostrar_15 (self, lista_de_IDs, indice):
         indice_f=indice+15
         if indice>=len(lista_de_IDs):
@@ -140,7 +143,8 @@ Linux a la alternativa de Windows"""
                     obra.resumen_por_obra()
             except:
                 print(f"No se pudo obtener la información para la obra con ID: {ID}")
-
+                
+"""Este metodo tiene la funcion de mostrar los detalles de una obra si se suministra su respectivo ID"""
     def mostrar_detalles_obra(self):
         try:
             id_obra = int(input("Por favor, ingrese el ID de la obra que desea ver en detalle: "))
@@ -179,6 +183,7 @@ Linux a la alternativa de Windows"""
         except:
             print("Error.")
 
+"""Aca es donde se utiliza la libreria pillow, si el usuario lo desea puede procesarse el URL de la imagen de la obra seleccionada y ser mostrada"""
     def mostrar_imagen_desde_url(self, url):
         try:
             response = requests.get(url, stream=True)
