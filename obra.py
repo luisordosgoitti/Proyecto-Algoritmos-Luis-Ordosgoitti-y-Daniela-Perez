@@ -32,3 +32,5 @@ class Obra:
         print(f"ID: {self.id_obra}")
         print(f"Nombre del Autor: {self.artista.nombre_artista}")
         print("-"*80)
+
+"""Aca se define la clase obra, sus atributos, y dos formas distintas de mostrar las obras, esta la forma resumida para la busqueda general y la forma extensa para la busqueda especifica, ademas de especificar si la obra tiene imagen"""
