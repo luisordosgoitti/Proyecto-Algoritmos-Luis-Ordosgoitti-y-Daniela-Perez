@@ -18,7 +18,7 @@ class Galeria:
 --->""")
             if menu == "1":
 """Este método de os.system('cls') se aprendió en el video de Aulas Virtuales del prof. Guillén de RESTful APIs. En este caso, se adaptó el método de os.system('clear') de
-Linux a la alternativa de Windows""""
+Linux a la alternativa de Windows"""
                 os.system('cls')
                 self.mostrar_departamentos()
                 try:
