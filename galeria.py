@@ -57,9 +57,6 @@ class Galeria:
 
     """Métodos de Búsqueda"""
     def buscar_artista(self, nombre):
-        """
-        Busca obras en la API por el nombre del artista.
-        """
         obras_artista = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nombre}")
         return obras_artista.json()
 
@@ -176,10 +173,10 @@ class Galeria:
                 else:
                     print("\nEsta obra no tiene una imagen disponible.")
             else:
-                print(f"Error: No se encontró ninguna obra con el ID {id_obra}.")
+                print(f"No se encontró ninguna obra con el ID {id_obra}.")
 
         except:
-            print("Error: El ID debe ser un número o no se pudo buscar la obra.")
+            print("Error.")
 
     def mostrar_imagen_desde_url(self, url):
         try:
